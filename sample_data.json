@@ -1,0 +1,13 @@
+[{
+    "Source": "Internet Movie Database",
+    "Value": "8.1/10",
+    "Id" : "imdb"
+}, {
+    "Source": "Rotten Tomatoes",
+    "Value": "92%",
+    "Id" : "rotten_tomatoes"
+}, {
+    "Source": "Metacritic",
+    "Value": "69/100",
+    "Id" : "metacritic"
+}]
