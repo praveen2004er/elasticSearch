@@ -2,13 +2,14 @@
   "name": "sample-elasticsearch",
   "version": "1.0.0",
   "description": "sample elastic search",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "node index.js"
   },
   "author": "praveen",
   "license": "ISC",
   "dependencies": {
-    "elasticsearch": "^16.0.0"
+    "elasticsearch": "^16.0.0",
+    "express": "^4.16.4"
   }
 }
