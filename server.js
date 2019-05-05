@@ -1,13 +1,10 @@
-const elasticsearch = require('elasticsearch');
 const express = require('express');
 const fs = require('fs');
 const app = express();
 const PORT = 5000;
-
-const elasticSearchClient = new elasticsearch.Client({
-    "host": "127.0.0.1:9200",
-    "log":  "error"
-});
+const verify = require('./verify');
+const search = require('./search');
+const elasticSearchClient = require('./elasticSearchClient');
 
 const bulkIndex = function bulkIndex(index, type, data) {
     let bulkBody = [];
@@ -24,7 +21,23 @@ const bulkIndex = function bulkIndex(index, type, data) {
     });
 
     console.log(bulkBody);
-}
+
+    elasticSearchClient.bulk({body: bulkBody})
+    .then(response => {
+      let errorCount = 0;
+      response.items.forEach(item => {
+        if (item.index && item.index.error) {
+          console.log(++errorCount, item.index.error);
+        }
+      });
+      console.log(
+        `Successfully indexed ${data.length - errorCount}
+         out of ${data.length} items`
+      );
+    })
+    .catch(console.err);
+
+};
 
 
 
@@ -35,7 +48,10 @@ async function indexData() {
 
 }
 
-indexData();
+//indexData();
+//verify();
+
+search('rotten_tomatoes');
 
 app.listen(PORT, function() {
     console.log("Server running successfully",  PORT);
